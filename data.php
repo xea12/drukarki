@@ -1,5 +1,5 @@
 <?php
-	#Include the connect.php file
+#Include the connect.php file
 include ('connect.php');
 // Connect to the database
 $mysqli = new mysqli($hostname, $username, $password, $database);
@@ -11,63 +11,65 @@ if (mysqli_connect_errno())
 	}
 // get data and store in a json array
 $query = "SELECT id, rodzaj, Model, uwagi, WiFi, LAN, FAX, NFC, ADF, duplex, Skan_Dwustr, A3, cena_drukarki FROM mytable";
-if (isset($_GET['sortdatafield']))
+if (isset($_GET['insert']))
 	{
-	$sortfields = array(
-		"id",
-		"rodzaj",
-		"Model",
-		"uwagi",
-		"WiFi",
-		"LAN",
-		"FAX",
-		"NFC",
-		"ADF",
-		"duplex",
-		"Skan_Dwustr",
-		"A3",
-		"cena_drukarki"
-	);
-	$sortfield = $_GET['sortdatafield'];
-	$sortorder = $_GET['sortorder'];
-	if (($sortfield != NULL) && (in_array($sortfield, $sortfields)))
+	// INSERT COMMAND
+	$query = "INSERT INTO `mytable`(`rodzaj`, `Model`, `uwagi`, `WiFi`, `LAN`, `FAX`, `NFC`, `ADF`, `duplex`, `Skan_Dwustr`, `A3`, `cena_drukarki`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	$result = $mysqli->prepare($query);
+	$result->bind_param('sssssss', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki']);
+	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
+	// printf ("New Record has id %d.\n", $mysqli->insert_id);
+	echo $res;
+	}
+  else if (isset($_GET['update']))
+	{
+	// UPDATE COMMAND
+	$query = "UPDATE `mytable` SET `rodzaj`=?, `Model`=?, `uwagi`=?, `WiFi`=?, `LAN`=?, `FAX`=?, `NFC`=?, `ADF`=?, `duplex`=?, `Skan_Dwustr`=?, `A3`=?, `cena_drukarki`=? WHERE `id`=?";
+	$result = $mysqli->prepare($query);
+	$result->bind_param('sssssssi', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki'], $_GET['id']);
+	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
+	// printf ("Updated Record has id %d.\n", $_GET['EmployeeID']);
+	echo $res;
+	}
+  else if (isset($_GET['delete']))
+	{
+	// DELETE COMMAND
+	$query = "DELETE FROM mytable WHERE id=?";
+	$result = $mysqli->prepare($query);
+	$result->bind_param('i', $_GET['id']);
+	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
+	// printf ("Deleted Record has id %d.\n", $_GET['EmployeeID']);
+	echo $res;
+	}
+  else
+	{
+	// SELECT COMMAND
+	$result = $mysqli->prepare($query);
+	$result->execute();
+	/* bind result variables */
+	$result->bind_result($id, $rodzaj, $Model, $uwagi, $WiFi, $LAN, $FAX, $NFC, $ADF, $duplex, $Skan_Dwustr, $A3, $cena_drukarki);
+	/* fetch values */
+	while ($result->fetch())
 		{
-		if ($sortorder == "desc")
-			{
-			$query = "SELECT id, rodzaj, Model, uwagi, WiFi, LAN, FAX, NFC, ADF, duplex, Skan_Dwustr, A3, cena_drukarki FROM mytable ORDER BY " . $sortfield . " DESC";
-			}
-		  else if ($sortorder == "asc")
-			{
-			$query = "SELECT id, rodzaj, Model, uwagi, WiFi, LAN, FAX, NFC, ADF, duplex, Skan_Dwustr, A3, cena_drukarki FROM mytable ORDER BY " . $sortfield . " ASC";
-			}
+		$employees[] = array(
+			'id' => $id,
+			'rodzaj' => $rodzaj,
+			'Model' => $Model,
+			'uwagi' => $uwagi,
+			'WiFi' => $WiFi,
+			'LAN' => $LAN,
+			'FAX' => $FAX,
+			'NFC' => $NFC,
+			'ADF' => $ADF,
+			'duplex' => $duplex,
+			'Skan_Dwustr' => $Skan_Dwustr,
+			'A3' => $A3,
+			'cena_drukarki' => $cena_drukarki
+		);
 		}
+	echo json_encode($employees);
 	}
-$result = $mysqli->prepare($query);
-$result->execute();
-/* bind result variables */
-$result->bind_result($id, $rodzaj, $Model, $uwagi, $WiFi, $LAN, $FAX, $NFC, $ADF, $duplex, $Skan_Dwustr, $A3, $cena_drukarki);
-/* fetch values */
-while ($result->fetch())
-	{
-	$orders[] = array(
-		'id' => $id,
-		'rodzaj' => $rodzaj,
-		'Model' => $Model,
-		'uwagi' => $uwagi,
-		'WiFi' => $WiFi,
-		'LAN' => $LAN,
-		'FAX' => $FAX,
-		'NFC' => $NFC,
-		'ADF' => $ADF,
-		'duplex' => $duplex,
-		'Skan_Dwustr' => $Skan_Dwustr,
-		'A3' => $A3,
-		'cena_drukarki' => $cena_drukarki
-	);
-	}
-echo json_encode($orders);
-/* close statement */
 $result->close();
-/* close connection */
 $mysqli->close();
+/* close connection */
 ?>
