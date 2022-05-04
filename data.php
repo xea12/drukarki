@@ -19,7 +19,6 @@ if (isset($_GET['insert']))
 	$result = $mysqli->prepare($query);
 	$result->bind_param('ssssssssssss', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki']);
 	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
-	// printf ("New Record has id %d.\n", $mysqli->insert_id);
 	echo $res;
 	}
   else if (isset($_GET['update']))
@@ -29,7 +28,6 @@ if (isset($_GET['insert']))
 	$result = $mysqli->prepare($query);
 	$result->bind_param('ssssssssssssi', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki'], $_GET['id']);
 	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
-	// printf ("Updated Record has id %d.\n", $_GET['EmployeeID']);
 	echo $res;
 	}
   else
