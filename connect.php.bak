@@ -1,6 +1,7 @@
 <?php
-$hostname = "localhost:3307";
-$database = "dane";
+# FileName="connect.php"
+$hostname = "localhost";
+$database = "drukarki";
 $username = "root";
 $password = "";
 ?>
