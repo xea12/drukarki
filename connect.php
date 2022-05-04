@@ -1,6 +1,6 @@
 <?php
 # FileName="connect.php"
-$hostname = "localhost:3307";
+$hostname = "localhost";
 $database = "drukarki";
 $username = "root";
 $password = "";
