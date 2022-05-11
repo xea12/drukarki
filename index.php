@@ -1,5 +1,9 @@
+<?php
+	include("import.php");
+?>
+
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 	<META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="JavaScript Grid with rich support for Data Filtering, Paging, Editing, Sorting and Grouping" />
@@ -7,20 +11,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />
     <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxdata.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxmenu.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxcheckbox.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxlistbox.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxdropdownlist.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxgrid.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxgrid.sort.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqxgrid.pager.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqxgrid.selection.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqxgrid.edit.js"></script> 
+    <script type="text/javascript" src="jqwidgets/a/jqxcore.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxdata.js"></script> 
+    <script type="text/javascript" src="jqwidgets/a/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxmenu.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.sort.js"></script> 
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.pager.js"></script> 
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.edit.js"></script> 
     <script type="text/javascript" src="scripts/demos.js"></script>
+    <script type="text/javascript" src="jqwidgets/a/jqxgrid.filter.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             var source =
@@ -30,16 +35,16 @@
                 datafields: [
 					 { name: 'id' },
 					 { name: 'rodzaj' },
-					 { name: 'Model' },
+					 { name: 'model' },
 					 { name: 'uwagi' },
-					 { name: 'WiFi' },
-					 { name: 'LAN' },
-					 { name: 'FAX' },
-					 { name: 'NFC' },
-					 { name: 'ADF' },
+					 { name: 'wifi' },
+					 { name: 'lan' },
+					 { name: 'fax' },
+					 { name: 'nfc' },
+					 { name: 'adf' },
 					 { name: 'duplex' },
-					 { name: 'Skan_Dwustr' },
-					 { name: 'A3' },
+					 { name: 'skan_dwustr' },
+					 { name: 'a3' },
 					 { name: 'cena_drukarki' }
                 ],
                 id: 'id',
@@ -66,27 +71,30 @@
             // initialize jqxGrid
             $("#jqxgrid").jqxGrid(
             {
-                width: 1460,
+                width: 1490,
                 height: 750,
                 altrows: true,
                 enabletooltips: true,
                 editable: true,
                 source: dataAdapter,
                 theme: theme,
+				sortable: true,
+				sorttogglestates: 1,
+				filterable: true,
                 columns: [
-                      { text: 'id', datafield: 'id', cellsformat: 'd', width: 40 },
-                      { text: 'rodzaj', datafield: 'rodzaj', width: 200 },
-                      { text: 'Model', datafield: 'Model', width: 400 },
-                      { text: 'uwagi', datafield: 'uwagi', width: 200 },
-                      { text: 'WiFi', datafield: 'WiFi', width: 50 },
-					  { text: 'LAN', datafield: 'LAN', width: 50 },
-					  { text: 'FAX', datafield: 'FAX', width: 50 },
-					  { text: 'NFC', datafield: 'NFC', width: 50 },
-					  { text: 'ADF', datafield: 'ADF', width: 50 },
-					  { text: 'duplex', datafield: 'duplex', width: 50 },
-					  { text: 'Skan_Dwustr', datafield: 'Skan_Dwustr', width: 100 },
-					  { text: 'A3', datafield: 'A3', width: 80 },
-					  { text: 'cena_drukarki', datafield: 'cena_drukarki', width: 120 }
+                      { int: 'ID', datafield: 'id', cellsformat: 'd', width: 40 },
+                      { text: 'Rodzaj', datafield: 'rodzaj', width: 200 },
+                      { text: 'Model', datafield: 'model', width: 400 },
+                      { text: 'Uwagi', datafield: 'uwagi', width: 200 },
+                      { boolean: 'WiFi', datafield: 'wifi', width: 50 },
+					  { boolean: 'LAN', datafield: 'lan', width: 50 },
+					  { boolean: 'FAX', datafield: 'fax', width: 50 },
+					  { boolean: 'NFC', datafield: 'nfc', width: 50 },
+					  { boolean: 'ADF', datafield: 'adf', width: 50 },
+					  { boolean: 'Duplex', datafield: 'duplex', width: 80 },
+					  { boolean: 'Skan Dwustr', datafield: 'skan_dwustr', width: 100 },
+					  { boolean: 'A3', datafield: 'a3', width: 80 },
+					  { float: 'Cena drukarki', datafield: 'cena_drukarki', width: 120 }
                   ]
             });
 

@@ -1,9 +1,10 @@
 <?php
 #Include the connect.php file
 include ('connect.php');
-// Connect to the database
+
 $mysqli = new mysqli($hostname, $username, $password, $database);
-/* check connection */
+
+
 if (mysqli_connect_errno())
 	{
 	$mysqli -> query("SET NAMES 'utf8'");
@@ -11,23 +12,32 @@ if (mysqli_connect_errno())
 	exit();
 	}
 // get data and store in a json array
-$query = "SELECT id, rodzaj, Model, uwagi, WiFi, LAN, FAX, NFC, ADF, duplex, Skan_Dwustr, A3, cena_drukarki FROM mytable";
-if (isset($_GET['insert']))
+$query = "SELECT id, rodzaj, model, uwagi, wifi, lan, fax, nfc, adf, duplex, skan_dwustr, a3, cena_drukarki FROM mytable";
+if (isset($_POST['insert']))
 	{
 	// INSERT COMMAND
-	$query = "INSERT INTO `mytable`(`rodzaj`, `Model`, `uwagi`, `WiFi`, `LAN`, `FAX`, `NFC`, `ADF`, `duplex`, `Skan_Dwustr`, `A3`, `cena_drukarki`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	$query = "INSERT INTO `mytable`(`rodzaj`, `model`, `uwagi`, `wifi`, `lan`, `fax`, `nfc`, `adf`, `duplex`, `skan_dwustr`, `a3`, `cena_drukarki`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 	$result = $mysqli->prepare($query);
-	$result->bind_param('ssssssssssss', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki']);
+	$result->bind_param('ssssssssssss', $_POST['rodzaj'], $_POST['model'], $_POST['uwagi'], $_POST['wifi'], $_POST['lan'], $_POST['fax'], $_POST['nfc'], $_POST['adf'], $_POST['duplex'], $_POST['skan_dwustr'], $_POST['a3'], $_POST['cena_drukarki']);
 	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
+	// printf ("New Record has id %d.\n", $mysqli->insert_id);
 	echo $res;
 	}
   else if (isset($_GET['update']))
 	{
 	// UPDATE COMMAND
-	$query = "UPDATE `mytable` SET `rodzaj`=?, `Model`=?, `uwagi`=?, `WiFi`=?, `LAN`=?, `FAX`=?, `NFC`=?, `ADF`=?, `duplex`=?, `Skan_Dwustr`=?, `A3`=?, `cena_drukarki`=? WHERE `id`=?";
+	$query = "UPDATE `mytable` SET `rodzaj`=?, `model`=?, `uwagi`=?, `wifi`=?, `lan`=?, `fax`=?, `nfc`=?, `adf`=?, `duplex`=?, `skan_dwustr`=?, `a3`=?, `cena_drukarki`=? WHERE `id`=?";
 	$result = $mysqli->prepare($query);
-	$result->bind_param('ssssssssssssi', $_GET['rodzaj'], $_GET['Model'], $_GET['uwagi'], $_GET['WiFi'], $_GET['LAN'], $_GET['FAX'], $_GET['NFC'], $_GET['ADF'], $_GET['duplex'], $_GET['Skan_Dwustr'], $_GET['A3'], $_GET['cena_drukarki'], $_GET['id']);
+	$result->bind_param('ssssssssssssi', $_GET['rodzaj'], $_GET['model'], $_GET['uwagi'], $_GET['wifi'], $_GET['lan'], $_GET['fax'], $_GET['nfc'], $_GET['adf'], $_GET['duplex'], $_GET['skan_dwustr'], $_GET['a3'], $_GET['cena_drukarki'], $_GET['id']);
 	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
+	echo $res;
+	}
+  else if (isset($_GET['delete']))
+	{
+	// DELETE COMMAND
+	$query = "DELETE FROM mytable WHERE id=?";
+	$result = $mysqli->prepare($query);
+	$result->bind_param('i', $_GET['id']);
 	echo $res;
 	}
   else
@@ -36,23 +46,23 @@ if (isset($_GET['insert']))
 	$result = $mysqli->prepare($query);
 	$result->execute();
 	/* bind result variables */
-	$result->bind_result($id, $rodzaj, $Model, $uwagi, $WiFi, $LAN, $FAX, $NFC, $ADF, $duplex, $Skan_Dwustr, $A3, $cena_drukarki); 
+	$result->bind_result($id, $rodzaj, $model, $uwagi, $wifi, $lan, $fax, $nfc, $adf, $duplex, $skan_dwustr, $a3, $cena_drukarki); 
 	/* fetch values */
 	while ($result->fetch())
 		{
 		$drukarki[] = array(
 			'id' => $id,
 			'rodzaj' => $rodzaj,
-			'Model' => $Model,
+			'model' => $model,
 			'uwagi' => $uwagi,
-			'WiFi' => $WiFi,
-			'LAN' => $LAN,
-			'FAX' => $FAX,
-			'NFC' => $NFC,
-			'ADF' => $ADF,
+			'wifi' => $wifi,
+			'lan' => $lan,
+			'fax' => $fax,
+			'nfc' => $nfc,
+			'adf' => $adf,
 			'duplex' => $duplex,
-			'Skan_Dwustr' => $Skan_Dwustr,
-			'A3' => $A3,
+			'skan_dwustr' => $skan_dwustr,
+			'a3' => $a3,
 			'cena_drukarki' => $cena_drukarki
 		);
 		}

@@ -1,7 +1,7 @@
 <?php
 # FileName="connect.php"
 $hostname = "localhost";
-$database = "drukarki";
+$database = "druk";
 $username = "root";
 $password = "";
 ?>
