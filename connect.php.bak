@@ -1,0 +1,7 @@
+<?php
+# FileName="connect.php"
+$hostname = "localhost:3307";
+$database = "druk";
+$username = "root";
+$password = "";
+?>

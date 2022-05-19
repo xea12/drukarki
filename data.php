@@ -32,14 +32,6 @@ if (isset($_POST['insert']))
 	$res = $result->execute() or trigger_error($result->error, E_USER_ERROR);
 	echo $res;
 	}
-  else if (isset($_GET['delete']))
-	{
-	// DELETE COMMAND
-	$query = "DELETE FROM mytable WHERE id=?";
-	$result = $mysqli->prepare($query);
-	$result->bind_param('i', $_GET['id']);
-	echo $res;
-	}
   else
 	{
 	// SELECT COMMAND

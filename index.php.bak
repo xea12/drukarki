@@ -71,7 +71,7 @@
                         }
                     });
                 }
-			
+			//$("#jqxNumberInput").jqxNumberInput({symbol: 'PLN'});
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
             // initialize jqxGrid
