@@ -1,7 +1,3 @@
-<?php
-	include_once("import.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +29,7 @@
     <script type="text/javascript" src="generatedata.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-			var source =
+            var source =
             {
                 datatype: "json",
                 cache: false,
@@ -52,7 +48,7 @@
 					 { name: 'a3' },
 					 { name: 'cena_drukarki' }
                 ],
-                id: 'id',
+                id: 'id_drukarki',
                 url: 'data.php',
                 updaterow: function (rowid, rowdata, commit) {
                     // synchronize with the server - send update command
@@ -71,16 +67,11 @@
                         }
                     });
                 }
-			
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
             // initialize jqxGrid
             $("#jqxgrid").jqxGrid(
             {
-				ready: function () {
-					  var symbol = $('selektor').jqxNumberInput('symbol');
-					  $("#jqxgrid").jqxGrid('beginrowedit', 0);
-				  },
                 width: 1500,
                 height: 750,
                 altrows: true,
@@ -91,7 +82,6 @@
 				sortable: true,
 				sorttogglestates: 1,
 				filterable: true,
-				selectionmode: 'singlecell',
                 columns: [
                       { int: 'id', datafield: 'id', width: 40 },
                       { text: 'rodzaj',columntype: 'textbox', datafield: 'rodzaj', width: 200, 
@@ -146,5 +136,10 @@
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
         <div style="float: left;" id="jqxgrid"></div>
     </div>
+	<form method="post" action="import4.php">
+    <div style="margin-top: 10px;">
+        <input type="submit" value="Zbuduj i załduj bazę" />
+    </div>
+	</form>
 </body>
 </html>

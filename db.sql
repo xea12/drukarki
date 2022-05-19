@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `druk`.`funkcje` ;
 
 CREATE TABLE IF NOT EXISTS `druk`.`funkcje` (
   `id_funkcje` INT NOT NULL AUTO_INCREMENT,
-  `wifi` VARCHAR(5) NULL,
-  `lan` VARCHAR(5) NULL,
-  `fax` VARCHAR(5) NULL,
-  `nfc` VARCHAR(5) NULL,
-  `adf` VARCHAR(5) NULL,
-  `duplex` VARCHAR(5) NULL,
-  `skan_dwustr` VARCHAR(5) NULL,
-  `a3` VARCHAR(5) NULL,
+  `wifi` ENUM('tak') NULL,
+  `lan` ENUM('tak') NULL,
+  `fax` ENUM('tak') NULL,
+  `nfc` ENUM('tak') NULL,
+  `adf` ENUM('tak') NULL,
+  `duplex` ENUM('tak') NULL,
+  `skan_dwustr` ENUM('tak') NULL,
+  `a3` ENUM('tak') NULL,
   PRIMARY KEY (`id_funkcje`))
 ENGINE = InnoDB;
 
@@ -67,8 +67,7 @@ DROP TABLE IF EXISTS `druk`.`cena` ;
 
 CREATE TABLE IF NOT EXISTS `druk`.`cena` (
   `id_cena` INT NOT NULL AUTO_INCREMENT,
-  `cena_drukarki` VARCHAR(10) NULL,
-  `cenacol` VARCHAR(45) NULL,
+  `cena_drukarki` FLOAT NULL,
   PRIMARY KEY (`id_cena`))
 ENGINE = InnoDB;
 
